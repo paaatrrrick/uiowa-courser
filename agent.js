@@ -2,7 +2,7 @@
 const Proompter = require("./proompter")
 
 class Agent {
-    constructor(degreeAuditPDF) { 
+    constructor(degreeAuditPDF) {
         this.degreeAuditPDF = degreeAuditPDF;
         this.degreeAuditText = 
         `
