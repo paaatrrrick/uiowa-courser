@@ -1,4 +1,4 @@
-const TESTING = false;
+const TESTING = true;
 
 function deleteAuthToken() {
     window.localStorage.removeItem("courser-auth");

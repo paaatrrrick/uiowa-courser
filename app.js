@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== "production") {
   const mongoose = require("mongoose");
   const basicRoutes = require("./basicRoutes");
   const cookieParser = require("cookie-parser");
+  const fileUpload = require('express-fileupload');
   
   mongoose.set('strictQuery', true);
   mongoose.connect(process.env.MONGO_URI, {
@@ -25,7 +26,8 @@ if (process.env.NODE_ENV !== "production") {
   db.once("open", () => {
       console.log("✅ Database connected");
   });
-  
+
+  app.use(fileUpload());
   app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://courser.netlify.app"]}));

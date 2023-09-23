@@ -8,6 +8,8 @@ const { randomStringToHash24Bits } = require("./utils/helpers");
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
+
+
 const basicRoutes = express.Router();
 
 //basicRoutes.get("/user", isLoggedInMiddleware, asyncMiddleware(async (req, res) => {
@@ -15,6 +17,22 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
     console.log('we are hit');
     res.json({blogs: "blogs"});
 }));
+
+basicRoutes.post('/upload', async (req, res) => {
+    try {
+      if (!req.files || !req.files.pdf) {
+        return res.status(400).send('No files were uploaded.');
+      }
+
+      const pdfFile = req.files.pdf;
+      console.log(pdfFile);
+  
+      res.send('File uploaded and processed.');
+    } catch (error) {
+      console.error('Error processing file:', error);
+      res.status(500).send('Server error');
+    }
+  });
 
 
 basicRoutes.use((err, req, res, next) => {

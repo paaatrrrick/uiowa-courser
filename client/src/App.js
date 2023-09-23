@@ -3,30 +3,44 @@ import './App.css';
 import { constants, getUserAuthToken } from './utils/constants';
 
 function App() {
-  const getData = async () => {
-    console.log('we are here');
-    const res = await fetch(`${constants.url}/home`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access'langface-auth-token": getUserAuthToken()
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-  }
+  const [file, setFile] = useState(null);
 
-  useEffect(() => {
-    console.log(process.env);
-    console.log(process.env.REACT_APP_RUNNING_LOCAL);
-    getData();
-  }, [])
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    try {
+      const response = await fetch(`${constants.url}/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Handle successful upload
+        console.log('File uploaded successfully');
+      } else {
+        // Handle upload error
+        console.error('File upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   return (
     <div className="App">
       <div className="h1">
         Home
       </div>
+      <input type="file" accept=".pdf" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload PDF</button>
     </div>
   );
 }
