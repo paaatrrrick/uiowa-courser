@@ -21,15 +21,15 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
 
 basicRoutes.post('/upload', async (req, res) => {
     try {
-      if (!req.files || !req.files.pdf) {
-        return res.status(400).send('No files were uploaded.');
-      }
+    //   if (!req.files || !req.files.pdf) {
+    //     return res.status(400).send('No files were uploaded.');
+    //   }
 
-      const degreeAuditPDF = req.files.pdf;
-      console.log(degreeAuditPDF);
+    //   const degreeAuditPDF = req.files.pdf;
+    //   console.log(degreeAuditPDF);
 
-      Agent.getSchedules(degreeAuditPDF);
-
+      agent = new Agent('');
+      agent.ready();
       res.send('File processed. Recommended schedules generated.');
     } catch (error) {
       console.error('Error processing file:', error);
