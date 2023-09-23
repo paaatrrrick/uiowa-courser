@@ -25,7 +25,14 @@ async function run() {
 
     // Insert data into a specific database and collection
     const db = client.db('data');
-    const collection = db.collection('CoreClassesFall23');
+    const collection = db.collection('CoreClasses');
+    await collection.updateMany(
+      { course: { $exists: true } }, 
+      [ 
+          { $set: { course: { $toInt: "$course" } } } 
+      ]
+    );
+    return
     const result = await collection.insertMany(jsonData);
 
     console.log('Inserted documents:', result.insertedCount);
