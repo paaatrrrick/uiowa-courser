@@ -1,4 +1,5 @@
-const OCR = require("./ocr");
+const path = require('path')
+const extract = require('pdf-text-extract')
 // const Proompter = require("./proompter")
 
 class Agent {
@@ -8,11 +9,16 @@ class Agent {
         this.recommendedSchedules = null;
     }
 
-    async getSchedules(degreeAuditPDF) {
-        const ocr = new OCR();
+    getSchedules(degreeAuditPDF) {
+        var filePath = path.join(__dirname, 'uploads/test.pdf')
+        extract(filePath, function (err, pages) {
+            if (err) {
+                console.dir(err)
+                return
+            }
+            console.dir(pages)
+        })
 
-        this.degreeAuditText = await ocr.getDegreeAuditText(degreeAuditPDF);
-        console.log(this.degreeAuditText);
         // this.recommendedSchedules = Proompter.getRecommendations(this.degreeAuditText);
         // return this.recommendedSchedules;
     }
