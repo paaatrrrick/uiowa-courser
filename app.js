@@ -28,7 +28,7 @@ if (process.env.NODE_ENV !== "production") {
   
   app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://my-courser.ai"]}));
+  app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://courser.netlify.app"]}));
   app.use("", basicRoutes);
   
   const server = http.createServer(app);
