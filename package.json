@@ -26,6 +26,9 @@
     "multer": "^1.4.4",
     "node-tesseract": "^0.2.7",
     "openai": "^3.1.0",
-    "tesseract.js": "^4.1.2"
+    "pdf-parse": "^1.1.1",
+    "tesseract.js": "^4.1.2",
+    "tesseract.js-node": "^0.1.0",
+    "util.promisify": "^1.1.2"
   }
 }
