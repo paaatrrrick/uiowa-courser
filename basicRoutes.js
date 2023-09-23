@@ -30,9 +30,9 @@ basicRoutes.post('/upload', async (req, res) => {
 
     const degreeAuditPDF = req.files.pdf;
     // save the file to to the uploads directory using fs using a unique name
-    fs.writeFileSync(path.join(__dirname, 'uploads', `${degreeAuditPDF.data}.pdf`), degreeAuditPDF);
+    fs.writeFileSync(path.join(__dirname, 'uploads', `test.pdf`), degreeAuditPDF.data);
     // get the pathname to that file
-    const degreeAuditPDFPath = path.join(__dirname, 'uploads', `${degreeAuditPDF.data}.pdf`);
+    const degreeAuditPDFPath = path.join(__dirname, 'uploads', `test.pdf`);
 
     // Create an instance of Agent
     const agent = new Agent();
