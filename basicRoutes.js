@@ -22,4 +22,9 @@ basicRoutes.use((err, req, res, next) => {
     res.status(500).json({ error: `Oops, we had an error ${err.message}` });
 });
 
+basicRoutes.post("/pdf", asyncMiddleware(async (req, res) => {
+    console.log("pdf sent");
+    res.json({pdf: "pdf"});
+}));
+
 module.exports = basicRoutes;
