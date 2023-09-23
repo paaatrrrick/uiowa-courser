@@ -7,7 +7,7 @@ const url = 'mongodb+srv://user:2Sz4X5YoPNTsy75r@cluster0.jb62ody.mongodb.net/?r
 const client = new MongoClient(url, {
     serverApi: {
       version: ServerApiVersion.v1,
-      strict: true,
+      // strict: true,
       deprecationErrors: true,
     }
 });
@@ -16,7 +16,7 @@ const client = new MongoClient(url, {
 async function run() {
   try {
     // Read the JSON file
-    const data = await fs.readFile('test.json', 'utf8');
+    const data = await fs.readFile('./coreClasses.json', 'utf8');
     const jsonData = JSON.parse(data);
 
     // Connect to the server
@@ -25,7 +25,7 @@ async function run() {
 
     // Insert data into a specific database and collection
     const db = client.db('data');
-    const collection = db.collection('classes');
+    const collection = db.collection('CoreClassesFall23');
     const result = await collection.insertMany(jsonData);
 
     console.log('Inserted documents:', result.insertedCount);
