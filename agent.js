@@ -1,18 +1,26 @@
-const OCR = require("./ocr");
-const Proompter = require("./proompter")
+const path = require('path')
+const extract = require('pdf-text-extract')
+// const Proompter = require("./proompter")
 
 class Agent {
-    constructor(degreeAuditPDF) { 
+    constructor(degreeAuditPDF) {
         this.degreeAuditPDF = degreeAuditPDF;
         this.degreeAuditText = null;
         this.recommendedSchedules = null;
     }
 
-    // basic template for agent
-    run = async () => {
-        this.degreeAuditText = OCR.getDegreeAuditText(this.degreeAuditPDF);
-        this.recommendedSchedules = Proompter.getRecommendations(this.degreeAuditText);
-        return this.recommendedSchedules;
+    getSchedules(degreeAuditPDF) {
+        var filePath = path.join(__dirname, 'uploads/test.pdf')
+        extract(filePath, function (err, pages) {
+            if (err) {
+                console.dir(err)
+                return
+            }
+            console.dir(pages)
+        })
+
+        // this.recommendedSchedules = Proompter.getRecommendations(this.degreeAuditText);
+        // return this.recommendedSchedules;
     }
 }
 

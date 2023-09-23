@@ -24,7 +24,6 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.1",
     "multer": "^1.4.4",
-    "openai": "^3.1.0",
-    "tesseract.js": "^4.1.2"
+    "openai": "^3.1.0"
   }
 }
