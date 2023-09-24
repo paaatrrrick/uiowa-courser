@@ -141,8 +141,22 @@ export function Main() {
 
   const sendNextQuestion = async (nextQuestion) => {
     scrollToBottom();
-    const previous = messages[messages.length - 1];
+    var previous = '';
+    try {
+      previous = JSON.stringify(messages[messages.length - 1].plans);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(previous)
     const nxtValue = {"type": "human", "text": nextQuestion}
+    var requirerments = nextQuestion
+    for (let message of messages) {
+      if (message.type !== "AI") {
+        requirerments = requirerments + ', ' + message.text;
+      }
+    } 
+    console.log('a');
+    console.log(requirerments);
     const scrollToBottomAfterTimeout = async () => {
       await new Promise(resolve => setTimeout(resolve, 100));
       scrollToBottom();
@@ -150,8 +164,8 @@ export function Main() {
     addMessage([{...nxtValue}], scrollToBottomAfterTimeout);
     const data = new FormData();
     data.append('file', file);
-    data.append('specifications', nextQuestion);
-    // data.append('prev', previous);
+    data.append('requirerments', requirerments);
+    data.append('previous', previous);
     const response = await fetch(`${constants.url}/updateAgain`, {
         method: 'POST',
         body: data,

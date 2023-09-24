@@ -35,7 +35,7 @@ basicRoutes.post('/upload', async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath, '');
+    const agent = new Agent(filePath, '', []);
     const plans = await agent.ready();
     res.json(plans);
   } catch (error) {
@@ -53,13 +53,15 @@ basicRoutes.post('/updateAgain', async (req, res) => {
 
     // console.log(req.files.file);
     const file = req.files.file;
-    const specifications = req.body.specifications;
+    var { requirerments, previous } = req.body;
+    requirerments = requirerments.split(', ');
+
     // save file to uploads directory
     const fileNameNoDot = file.name.split('.')[0];
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath, specifications);
+    const agent = new Agent(filePath, requirerments, previous);
     const plans = await agent.ready();
     res.json(plans);
   } catch (error) {

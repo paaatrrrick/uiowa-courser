@@ -5,12 +5,13 @@ const fs = require('fs')
 const extract = require('pdf-text-extract')
 
 class Agent {
-    constructor(degreeAuditPDFPath, specifications) {
+    constructor(degreeAuditPDFPath, specifications, previous) {
         this.specifications = specifications;
         this.degreeAuditPDFPath = degreeAuditPDFPath;
         this.degreeAuditText = null;
         this.proompter = new Proompter();
         this.scheduleBuilder = new scheduleBuilder();
+        this.previous = previous;
     }         
     /* 
     *
@@ -40,7 +41,7 @@ class Agent {
         this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
         const remaining = await this.proompter.getMissing(this.degreeAuditText);
         const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
-        const getSchedules = await this.proompter.buildSchedule(recommendedSchedules, this.specifications);
+        const getSchedules = await this.proompter.buildSchedule(recommendedSchedules, this.specifications, this.previous);
         return getSchedules;
     }
 
