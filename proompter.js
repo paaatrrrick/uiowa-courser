@@ -33,7 +33,7 @@ class Proompter{
 
 
 const sampleDegreeAudit0 =
-` Sharda, Gautam                                             Program: A22C1BS 
+      ` Sharda, Gautam                                             Program: A22C1BS 
 01421135                                                Catalog Year: FA2021 
                                                     Prepared: 04/20/23 - 02:28 PM
                        The University of Iowa - Iowa City, Iowa
@@ -279,7 +279,7 @@ PL = MyPlan Course                           >R = Repeatable course
 8/8 (ver. 4.5.4.2)                 01421135 - Sharda, Gautam               04/20/23 - 02:28 PM`;
 
 const sampleDegreeAudit =
-` Sharda, Gautam                                             Program: A22C1BS 
+      ` Sharda, Gautam                                             Program: A22C1BS 
 01421135                                                Catalog Year: FA2021 
                                                     Prepared: 04/20/23 - 02:28 PM
                        The University of Iowa - Iowa City, Iowa
@@ -600,7 +600,7 @@ PL = MyPlan Course                           >R = Repeatable course
 8/8 (ver. 4.5.4.2)                 01421135 - Sharda, Gautam               04/20/23 - 02:28 PM`;
 
 const sampleDegreeAudit2 =
-`Degree audit:
+      `Degree audit:
 
 Zhu, Liao                                                  Program: A22C1BS 
  01451797                                                Catalog Year: FA2021 
@@ -913,7 +913,7 @@ NO
 const sampleResponse = '[ ["INTERNATIONAL AND GLOBAL ISSUES"], [["MATH:1850, MATH:1550"], ["CS:3820"], ["CS:3620", "CS:3640"], ["CS:3700, MATH:3800", ["CS:3990"], ["CS:3620", "CS:5899", "RANGE"]], ["CS:3620", "CS:5899", "RANGE"]] ]';
 
 const sampleDegreeAudit3 =
-`Degree audit:
+      `Degree audit:
 
 Zhu, Liao                                                  Program: A22C1BS 
  01451797                                                Catalog Year: FA2021 
@@ -1106,8 +1106,8 @@ Therefore, the GENERAL EDUCATION REQUIREMENTS array should only be a 1D array, h
 could be at most a 3D array if there is a requirement where there are multiple choices and one of the choices is a range. 
 So in totality, your output MUST ONLY be an array of 2 arrays. Do not include anything else at all in your output except the array.`
 
-const systemProompt = 
-`You are a course advisor named Courser. You will be given a student's degree audit and your job is to parse the audit to 
+const systemProompt =
+      `You are a course advisor named Courser. You will be given a student's degree audit and your job is to parse the audit to 
 identify all the unfulfilled degree requirements. The unfulfilled degree requirements follow after three dashes (---). 
 Here is a sample degree audit: *START OF SAMPLE DEGREE AUDIT* ${sampleDegreeAudit} *END OF SAMPLE DEGREE AUDIT*. 
 For any degree audit, there are 3 kinds of unfullfilled requirements: 
@@ -1124,8 +1124,8 @@ So in totality, your output MUST ONLY be an array of 2 arrays. Do not include an
 For the sample degree audit, you should return:
 ${sampleResponse}
 `;
-const systemProompt0 = 
-`You are a course advisor named Courser. You will be given a student's degree audit and your job is to parse the audit to 
+const systemProompt0 =
+      `You are a course advisor named Courser. You will be given a student's degree audit and your job is to parse the audit to 
 identify all the unfulfilled degree requirements. The unfulfilled degree requirements follow after three dashes (---). 
 Your job is to return the unfulfilled GENERAL EDUCATION and MAJOR requirements in an array of 2 arrays: 
 [ [GENERAL EDUCATION REQUIREMENTS], [MAJOR REQUIREMENTS] ]. 
