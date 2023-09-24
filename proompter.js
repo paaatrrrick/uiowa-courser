@@ -39,31 +39,6 @@ class Proompter {
             "content": `[{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm},  {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]`}]
       }
 
-      buildSchedules = async (recommendedSchedules, specifications) => {
-            return {
-                plans: [
-                  {courses: [ 
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                  ]},
-                  {courses: [ 
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                  ]},
-                  {courses: [ 
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-                  ]},
-                ],
-              }
-        } 
 
     getMissing = async (degreeAuditText) => {
       const completion = await this.openai.createChatCompletion({
@@ -110,7 +85,7 @@ class Proompter {
       });
       const schedule = completion.data.choices[0].message.content;
       console.log(schedule);
-      return {course: JSON.parse(schedule)}
+      return {plans: [{courses: JSON.parse(schedule)}]}
     }
 }
 

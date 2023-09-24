@@ -147,7 +147,6 @@ class scheduleBuilder {
         subject: subject
       }).toArray();
 
-      console.log("Core: ", courses);
       return this.reducer(courses[0]);
 
     } catch (error) {
