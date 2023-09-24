@@ -21,23 +21,26 @@ class scheduleBuilder {
 
   getRecommendations = async (remainingCourses) => {
     console.log('schedule');
-    // resolve with grouping
-    // pick 5, 2 gen ed, 3 cores
     const groups = { gened: {}, core: [] };
     const remainingGeneds = remainingCourses[0];
     for (let requirement of remainingGeneds) {
-      const group = await this.getGenEdCoursesByRequirement(requirement); // mongo
-      groups.gened[requirement] = group;
+      const temp = []
+      const mygroups = await this.getGenEdCoursesByRequirement(requirement); // mongo
+      for (let group of mygroups) {
+        const courseID = group.courseNumbers[0];
+        const fixed = await this.getCourseInfo(courseID)
+        if (fixed) {
+          temp.push(fixed);
+        }
+      }
+      groups.gened[requirement] = temp;
     }
 
     const remainingCores = remainingCourses[1];
     for (let element of remainingCores) {
       if (element.length === 1) {
         const fixed = await this.getCourseInfo(element[0])
-        //core: 2d array
-        //gened: 2d array
-        //course objectID
-        groups.core.push(fixed);
+        groups.core.push([fixed]);
 
       } else {
         if (element[element.length - 1] === "RANGE") {
@@ -81,7 +84,14 @@ class scheduleBuilder {
     //   finalrecs.push(thingtopush);
     // }
   }
-  
+
+
+  reducer = (object) => {
+    var time = object.timeAndLocations.length > 0 ? (object.timeAndLocations[0].startTime + ' ' + object.timeAndLocations[0].days) : "tbd";
+    const subject = object.subject + ":" + String(object.course);
+    return {instructor: "tbd", title: object.title, time:time, ID:subject}
+  }
+
 
   getGenEdCoursesByRequirement = async (requirement, session = "Spring 2023") => {
     try {
@@ -138,7 +148,7 @@ class scheduleBuilder {
       }).toArray();
 
       console.log("Core: ", courses);
-      return courses;
+      return this.reducer(courses[0]);
 
     } catch (error) {
       console.error('Error:', error);
