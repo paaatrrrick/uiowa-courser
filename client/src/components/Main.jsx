@@ -141,6 +141,7 @@ export function Main() {
 
   const sendNextQuestion = async (nextQuestion) => {
     scrollToBottom();
+    const previous = messages[messages.length - 1];
     const nxtValue = {"type": "human", "text": nextQuestion}
     const scrollToBottomAfterTimeout = async () => {
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -149,7 +150,8 @@ export function Main() {
     addMessage([{...nxtValue}], scrollToBottomAfterTimeout);
     const data = new FormData();
     data.append('file', file);
-    data.append('specifications', nextQuestion)
+    data.append('specifications', nextQuestion);
+    // data.append('prev', previous);
     const response = await fetch(`${constants.url}/updateAgain`, {
         method: 'POST',
         body: data,

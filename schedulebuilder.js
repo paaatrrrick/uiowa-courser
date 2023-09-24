@@ -16,7 +16,33 @@ const client = new MongoClient(url, {
 
 class scheduleBuilder {
   constructor() {
+    this.client = new MongoClient(url, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        deprecationErrors: true,
+      },
+    });
+    this.db = null;
     this.dbStuff = null;
+  }
+
+  connect = async () => {
+    try {
+      await this.client.connect();
+      console.log("Connected to MongoDB!");
+      this.db = this.client.db('data');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  disconnect = async () => {
+    try {
+      await this.client.close();
+      console.log("Disconnected from MongoDB!");
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   getRecommendations = async (remainingCourses) => {
@@ -95,11 +121,12 @@ class scheduleBuilder {
 
   getGenEdCoursesByRequirement = async (requirement, session = "Spring 2023") => {
     try {
-      await client.connect();
-      console.log("Connected to MongoDB!");
+      // await client.connect();
+      // console.log("Connected to MongoDB!");
 
-      const db = await client.db('data');
-      const collection = await db.collection('GenEdClasses');
+      // const db = await client.db('data');
+      // const collection = await db.collection('GenEdClasses');
+      const collection = this.db.collection('GenEdClasses');
       // // If a document is found, print its field names
       // const doc = await collection.find().toArray();
 
@@ -134,11 +161,12 @@ class scheduleBuilder {
     const courseNumber = rec.slice(rec.indexOf(":") + 1, rec.length);
     const session = "Spring 2024";
     try {
-      await client.connect();
-      console.log("Connected to MongoDB!");
+      // await client.connect();
+      // console.log("Connected to MongoDB!");
 
-      const db = await client.db('data');
-      const collection = await db.collection('CoreClasses');
+      // const db = await client.db('data');
+      // const collection = await db.collection('CoreClasses');
+      const collection = this.db.collection('CoreClasses');
 
       // Case insensitive search
       const courses = await collection.find({
@@ -159,11 +187,13 @@ class scheduleBuilder {
   // Retrieves a list of courses within a specified range from the database.
   coursesWithinRange = async (min, max, session = "Spring 2023", subject) => {
     try {
-      await client.connect();
-      console.log("Connected to MongoDB!");
+      // await client.connect();
+      // console.log("Connected to MongoDB!");
 
-      const db = await client.db('data');
-      const collection = await db.collection('CoreClasses');
+      // const db = await client.db('data');
+      // const collection = await db.collection('CoreClasses');
+      const collection = this.db.collection('CoreClasses');
+
 
       // Case insensitive search
       const coursesInRange = await collection.find({

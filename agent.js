@@ -36,6 +36,7 @@ class Agent {
 
     // basic template for agent
     ready = async () => {
+        await this.scheduleBuilder.connect();
         this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
         const remaining = await this.proompter.getMissing(this.degreeAuditText);
         const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
