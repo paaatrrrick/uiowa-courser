@@ -98,7 +98,7 @@ const messagesHook = () => {
                   const nextCourse = nextPlan.courses.shift();
                   newPlans.push(nextCourse);
                   setMessages([...state, {...nxt, "plans": [...totalPlans, {"courses": [...newPlans]}]}]);
-                  await sleep(0);
+                  await sleep(200);
                 }
                 totalPlans.push({"courses": [...newPlans]});
                 nxt["plans"] = [...totalPlans];
@@ -109,7 +109,7 @@ const messagesHook = () => {
                 first[key] = first[key].slice(1);
                 nxt[key] += nextCharacter;
                 setMessages([...state, {...nxt}]);
-                await sleep(0);
+                await sleep(20);
               }
             }
           }
