@@ -18,7 +18,8 @@ class Agent {
     *  @returns {string} - text from pdf
     *   
     */
-    getText = (pathToPdf) => {
+    getText = async (pathToPdf) => {
+        var myValue = null;
         extract(pathToPdf, function (err, pages) {
             if (err) {
                 console.dir(err)
@@ -26,8 +27,12 @@ class Agent {
             }
             console.log(pages.join(''));
             fs.writeFileSync('./dump.txt', pages.join(''), 'utf-8');
-            return pages.join('');
+            myValue = pages.join('');
         })
+        while (myValue === null) {
+            await new Promise(resolve => setTimeout(resolve, 10));
+        }
+        return myValue;
     }
 
     // basic template for agent

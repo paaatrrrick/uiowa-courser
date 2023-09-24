@@ -5,7 +5,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const fs = require('fs').promises;
 
 // Connection URL
-const url = 'mongodb+srv://user:2Sz4X5YoPNTsy75r@cluster0.jb62ody.mongodb.net/?retryWrites=true&w=majority';
+const url = process.env.MONGO_URI;
 
 const client = new MongoClient(url, {
     serverApi: {
@@ -24,23 +24,22 @@ class scheduleBuilder {
         // resolve with grouping
         // pick 5, 2 gen ed, 3 cores
         const groups = {gened: {}, core:[]};
-        const remainingGeneds = remainingCourses.gened;
+        const remainingGeneds = remainingCourses[0];
         for (let requirement in remainingGeneds){
             const group = await this.getGenEdCoursesByRequirement(requirement, null); // mongo
             groups.gened[requirement] = group;
         }
-        const remainingCores = remainingCourses.cores;
-        for (let element in remainingCores){
-            if (typeof element === "string") {
-                groups.core.push = [element];
+        const remainingCores = remainingCourses[1];
+        for (let element of remainingCores){
+            if (element.length === 1) {
+                groups.core.push = element;
             }
             else {
                 if (element[element.length-1] === "RANGE"){
                     const subject = element[0].slice(0, rec.indexOf(":"));
                     const group = await this.courseswithinrange(element[0], element[1], subject); // mongo
                     groups.core.push(group);
-                }
-                else{
+                } else{
                     groups.core.push(element);
                 }
             }

@@ -13,17 +13,34 @@ class Proompter{
     }
 
     getMissing = async (degreeAuditText) => {
-        // const completion = await this.openai.createChatCompletion({
-        //     model: 'gpt-4',
-        //     messages: [{"role": "system", "content": `${systemProompt0}`},
-        // {"role": "user", "content": `${sampleDegreeAudit0}`},
-        // {"role": "assistant", "content": `${sampleResponse}`},
-        // {"role": "user", "content": `${sampleDegreeAudit3}`}]
-        // });
-        // console.log(completion.data.choices); 
-        //const remaining = completion.data.choices[0].content;
-        const remaining = '{"geneds": ["INTERNATIONAL AND GLOBAL ISSUES"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }' 
-        return JSON.parse(remaining);
+      const completion = await this.openai.createChatCompletion({
+            model: 'gpt-3.5-turbo-16k',
+            temperature: 0,
+            messages: [
+                  {"role": "system", "content": `${systemProompt0}`},
+                  {"role": "user", "content": `${sampleDegreeAudit0}`},
+                  {"role": "assistant", "content": `${sampleResponse}`},
+                  {"role": "user", "content": `${degreeAuditText}`}
+            ]
+      });
+      console.log(completion.data.choices); 
+      const remaining = completion.data.choices[0].message.content;
+      console.log(remaining);
+      //   const remaining = '{"geneds": ["INTERNATIONAL AND GLOBAL ISSUES"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }' 
+      const json = JSON.parse(remaining);
+      const newJSON0 = []
+      for (let row of json[1]){
+            const newRow = []
+            for (let element of row){
+                  const splitElement = element.split(", ");
+                  for (let newElement of splitElement){
+                        newRow.push(newElement);
+                  }
+            }
+            newJSON0.push(newRow);
+      }
+      json[1] = newJSON0;
+      return json;
         //return completion.data.choices[0].content;     
     }
 }
