@@ -20,8 +20,7 @@ class Agent {
     *   
     */
     getText = (pathToPdf) => {
-        var filePath = path.join(__dirname, pathToPdf)
-        extract(filePath, function (err, pages) {
+        extract(pathToPdf, function (err, pages) {
             if (err) {
                 console.dir(err)
                 return
