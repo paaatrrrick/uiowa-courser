@@ -22,7 +22,7 @@ export function Hero() {
         a lot more simpler.
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-Course registration is way to hard for most people.
+        Find the perfect classes to register for without having to go through the degree audit!
       </p>
       <div className="mt-10 flex justify-center gap-x-6">
         <Button href="/home">Get started with Courser</Button>
