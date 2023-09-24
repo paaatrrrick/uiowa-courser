@@ -13,9 +13,9 @@ class Agent {
     // basic template for agent
     ready = async () => {
         // this.degreeAuditText = OCR.getDegreeAuditText(this.degreeAuditPDF);
-        const proompter = new Proompter(this.degreeAuditText);
+        const degreeAuditText = pdftotext;
         const remaining = this.proompter.getMissing();
-        const recommendedSchedules = this.scheduleBuilder.getRecommendations();
+        const recommendedSchedules = this.scheduleBuilder.getRecommendations(remaining);
         return recommendedSchedules;
     }
 
