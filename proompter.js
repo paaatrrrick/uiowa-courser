@@ -12,31 +12,44 @@ class Proompter {
             this.openai = new OpenAIApi(configuration);
             this.requirements = ["Only pick 1 course from 1 array and never more than 1", "Only pick courses whose times do not overlap and do not pick courses with conflicting times"];
             this.messages =  [
-            {"role": "system", 
-            "content": `You are a course advisor named Courser. Given an array of constraints and an object of potential courses, your job is to return 1 array of courses that satisfy the constraints. Here is what the potential courses object looks like: {
-                  gened: {
-                    'GENED': [
-                      [courseObject, ...], ...]
-                    ]
-                  },
-                  core: [ [courseObject, ...], ...]
-                }. A course object is defined as follows: {title: title, professor: professor, time: time, subject: subject}. Your output must be an array of some of these courses such that the schedule satsifies all the requirements. Do not output anything other than 1 array of courses.`},  
-
-            {"role": "user", 
-            "content": `Constraints=[Don't return any classes that start at or before 9am, I only want history geneds, I want to take Networks], potentialCourses={
-                                    geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 9:30pm - 10:30pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
-                                    core: [{ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}]}`},
-
-                                    {"role": "assistant", 
-            "content": `[{ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}, {ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}]`},
-
-            {"role": "user", 
-            "content": `Constraints=[I don't want any classes past 5pm, I want to take any class with Professor Goddard], potentialCourses={
-                              geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
-                              core: [{ID: CS:2300, Title: Networks, Instructor: Goddard, Time: 6:00pm - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: John Doe, Time: 4:00pm - 5:00pm}, {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]}`},
-
+                  {"role": "system", 
+                  "content": `You are a course advisor named Courser. Given an array of constraints and an object of potential courses, your job is to return 1 array of courses that satisfy the constraints. Here is what the potential courses object looks like: {
+                        gened: {
+                          'GENED': [
+                            [courseObject, ...], ...]
+                          ]
+                        },
+                        core: [ [courseObject, ...], ...]
+                      }. A course object is defined as follows: {title: title, professor: professor, time: time, subject: subject}. Your output must be an array of some of these courses such that the schedule satsifies all the requirements. Do not output anything other than 1 array of courses.`},  
+      
+                  {"role": "user", 
+                  "content": `Constraints=[Don't return any classes that start at or before 9am, I only want history geneds, I want to take Networks], potentialCourses={
+                                          geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 9:30pm - 10:30pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
+                                          core: [{ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}]}`},
+                  {"role": "assistant", 
+                  "content": `[{ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}, {ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}]`},
+      
+                  {"role":"user", 
+                  "content": `Constraints=[Don't return any classes that start at or before 9am, I only want history geneds, I want to take Networks, replace ant history with a gen-ed for art], potentialCourses={
+                        geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm MWF}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 9:30pm - 10:30pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
+                        core: [{ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm TTh}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm TTh}]}`},
+                  {"role":"assistant",
+                  "content":`[{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00pm - 10:30pm MWF}, {ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm TTh}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm TTH}]`},
+      
+                  {"role": "user", 
+                  "content": `Constraints=[I don't want any classes past 5pm, I want to take any class with Professor Goddard], potentialCourses={
+                                    geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
+                                    core: [{ID: CS:2300, Title: Networks, Instructor: Goddard, Time: 6:00pm - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: John Doe, Time: 4:00pm - 5:00pm}, {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]}`},
+                  {"role":"assistant", 
+                  "content": `[{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm},  {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]`},
+      
+            {"role":"user",
+            "content": `Constraints=[I don't want any classes past 5pm, I want to take any class with Professor Goddard, Replace CS fundamentals with a different CS course], potentialCourses={
+                  geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15am}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
+                  core: [{ID: CS:2300, Title: Networks, Instructor: Goddard, Time: 6:00pm - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: John Doe, Time: 4:00pm - 5:00pm}, {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]}`},
             {"role":"assistant", 
-            "content": `[{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm},  {ID: CS:1100, Title: CS Fundamentals, Instructor: Mayer, Time: 3:00pm - 3:45pm}]`}]
+            "content": `[{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 10:45pm - 12:15am}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:00pm - 5:00pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm},  {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}]`},
+            ]
       }
 
 
@@ -72,12 +85,16 @@ class Proompter {
         //return completion.data.choices[0].content;     
     }
 
-    buildSchedule = async(potentials, newRequirement) => {
+    buildSchedule = async(potentials, newRequirement, previous) => {
       console.log('potentials', potentials);
       if (newRequirement) {
             this.requirements.push(newRequirement);
       }
+      if (previous && previous.length > 0) {
+            this.messages.push({"role": "user", "content": `this was your previous response: ${previous}`});
+      }
       this.messages.push({"role": "user", "content": `Constraints=${this.requirements}, potentialCourses=${JSON.stringify(potentials)}`});
+      
       const completion = await this.openai.createChatCompletion({
             model: 'gpt-4',
             temperature: 0,
