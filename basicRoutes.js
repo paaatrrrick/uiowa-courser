@@ -31,7 +31,8 @@ basicRoutes.post('/upload', async (req, res) => {
     // console.log(req.files.file);
     const file = req.files.file;
     // save file to uploads directory
-    const filePath = path.join(__dirname, 'uploads', file.name + file.md5 + '.pdf');
+    const fileNameNoDot = file.name.split('.')[0];
+    const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
     agent = new Agent(filePath);
