@@ -1,5 +1,5 @@
 const Proompter = require("./proompter")
-const scheduleBuilder = require("./scheduleBuilder")
+const scheduleBuilder = require("./schedulbuilder")
 const path = require('path')
 const fs = require('fs')
 const extract = require('pdf-text-extract')
