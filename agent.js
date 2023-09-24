@@ -32,9 +32,10 @@ class Agent {
 
     // basic template for agent
     ready = async () => {
-        this.degreeAuditText = this.getText(this.degreeAuditPDFPath);
-        const remaining = this.proompter.getMissing(this.degreeAuditText);
-        const recommendedSchedules = this.scheduleBuilder.getRecommendations(remaining);
+        this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
+        const remaining = await this.proompter.getMissing(this.degreeAuditText);
+        const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
+        console.log(recommendedSchedules);
         return recommendedSchedules;
     }
 

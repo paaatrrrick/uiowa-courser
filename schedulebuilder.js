@@ -25,45 +25,45 @@ class scheduleBuilder {
         // pick 5, 2 gen ed, 3 cores
         const groups = {gened: {}, core:[]};
         const remainingGeneds = remainingCourses.gened;
-        for (requirement in remainingGeneds){
+        for (let requirement in remainingGeneds){
             const group = await this.getGenEdCoursesByRequirement(requirement, null); // mongo
-            groupings.gened[requirement] = group;
+            groups.gened[requirement] = group;
         }
         const remainingCores = remainingCourses.cores;
-        for (element in remainingCores){
+        for (let element in remainingCores){
             if (typeof element === "string") {
-                groupings.core.push = [element];
+                groups.core.push = [element];
             }
             else {
                 if (element[element.length-1] === "RANGE"){
                     const subject = element[0].slice(0, rec.indexOf(":"));
                     const group = await this.courseswithinrange(element[0], element[1], subject); // mongo
-                    groupings.core.push(group);
+                    groups.core.push(group);
                 }
                 else{
-                    groupings.core.push(element);
+                    groups.core.push(element);
                 }
             }
         }
         const recs = []
-        const i = 0;
-        for (group in groups.gened){
+        let i = 0;
+        for (let group in groups.gened){
             if (i >= 2){
                 break;
             }
             recs.push(group[0]);
             i++;
         }
-        const j = 0;
-        for (group in groups.core){
+        let j = 0;
+        for (let group in groups.core){
             if (i >= 3){
                 break;
             }
             recs.push(group[0]);
             i++;
         }
-        const finalrecs = []
-        for (i = 0; i < recs.length; i++){
+        let finalrecs = []
+        for (let i = 0; i < recs.length; i++){
             const thingtopush = await this.getCourseInfo(recs[i])
             finalrecs.push(thingtopush);
         }
