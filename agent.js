@@ -24,7 +24,6 @@ class Agent {
                 console.dir(err)
                 return
             }
-            console.log(pages.join(''));
             fs.writeFileSync('./dump.txt', pages.join(''), 'utf-8');
             return pages.join('');
         })
@@ -34,6 +33,8 @@ class Agent {
     ready = async () => {
         this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
         const remaining = await this.proompter.getMissing(this.degreeAuditText);
+        console.log(remaining);
+        return;
         const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
         console.log(recommendedSchedules);
         return recommendedSchedules;
