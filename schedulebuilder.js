@@ -24,12 +24,14 @@ class scheduleBuilder {
     // resolve with grouping
     // pick 5, 2 gen ed, 3 cores
     const groups = { gened: {}, core: [] };
-    const remainingGeneds = remainingCourses.gened;
-    for (let requirement in remainingGeneds) {
-      const group = await this.getGenEdCoursesByRequirement(requirement, null); // mongo
-      groups.gened[requirement] = group;
+    const remainingGeneds = remainingCourses["geneds"];
+    for (let requirement of remainingGeneds) {
+      const group = await this.getGenEdCoursesByRequirement(requirement); // mongo
+      groups.gened[requirement] = group[0];
     }
-    const remainingCores = remainingCourses.cores;
+    console.log(groups);
+    return;
+    const remainingCores = remainingCourses["cores"];
     for (let element in remainingCores) {
       if (typeof element === "string") {
         groups.core.push = [element];
@@ -69,7 +71,7 @@ class scheduleBuilder {
     }
     return finalrecs;
   }
-  getGenEdCoursesByRequirement = async (requirement, session = 20235) => {
+  getGenEdCoursesByRequirement = async (requirement, session = "Spring 2023") => {
     try {
       await client.connect();
       console.log("Connected to MongoDB!");
@@ -77,12 +79,27 @@ class scheduleBuilder {
       const db = await client.db('data');
       const collection = await db.collection('GenEdClasses');
 
+      const document = await collection.findOne();
+
+      // // If a document is found, print its field names
+      // const doc = await collection.find().toArray();
+
+
+      // if (doc.length > 0) {
+      //   console.log('Values under "International and Global Issues" category:');
+      //   doc.forEach((document) => {
+      //     if (document.term && document.term.includes(session)) {
+      //       // Extract and print values under the category
+      //       console.log(document.term);
+      //     }
+      //   });
+      // }
+
       const documents = await collection.find({
         "requirementFilled": { "$regex": requirement, "$options": "i" },
         "term": session
       }).toArray();
 
-      console.log(documents);
       return documents
 
     } catch (error) {
