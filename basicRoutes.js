@@ -35,7 +35,7 @@ basicRoutes.post('/upload', async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    agent = new Agent(filePath);
+    const agent = new Agent(filePath);
     agent.ready();
     res.send('File processed. Recommended schedules generated.');
   } catch (error) {

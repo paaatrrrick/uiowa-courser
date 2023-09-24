@@ -18,15 +18,20 @@ class Agent {
     *  @returns {string} - text from pdf
     *   
     */
-    getText = (pathToPdf) => {
+    getText = async (pathToPdf) => {
+        var myValue = null;
         extract(pathToPdf, function (err, pages) {
             if (err) {
                 console.dir(err)
                 return
             }
             fs.writeFileSync('./dump.txt', pages.join(''), 'utf-8');
-            return pages.join('');
+            myValue = pages.join('');
         })
+        while (myValue === null) {
+            await new Promise(resolve => setTimeout(resolve, 10));
+        }
+        return myValue;
     }
 
     // basic template for agent
@@ -34,8 +39,8 @@ class Agent {
         this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
         const remaining = await this.proompter.getMissing(this.degreeAuditText);
         const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
-        console.log(recommendedSchedules);
-        return recommendedSchedules;
+        const getSchedules = await this.proompter.buildSchedules(recommendedSchedules);
+        return getSchedules;
     }
 
     // todo

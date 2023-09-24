@@ -5,7 +5,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const fs = require('fs').promises;
 
 // Connection URL
-const url = 'mongodb+srv://user:2Sz4X5YoPNTsy75r@cluster0.jb62ody.mongodb.net/?retryWrites=true&w=majority';
+const url = process.env.MONGO_URI;
 
 const client = new MongoClient(url, {
   serverApi: {
@@ -21,56 +21,78 @@ class scheduleBuilder {
 
   getRecommendations = async (remainingCourses) => {
     console.log('schedule');
-    // resolve with grouping
-    // pick 5, 2 gen ed, 3 cores
     const groups = { gened: {}, core: [] };
-    const remainingGeneds = remainingCourses["geneds"];
+    const remainingGeneds = remainingCourses[0];
     for (let requirement of remainingGeneds) {
-      const group = await this.getGenEdCoursesByRequirement(requirement); // mongo
-      groups.gened[requirement] = group;
+      const temp = []
+      const mygroups = await this.getGenEdCoursesByRequirement(requirement); // mongo
+      for (let group of mygroups) {
+        const courseID = group.courseNumbers[0];
+        const fixed = await this.getCourseInfo(courseID)
+        if (fixed) {
+          temp.push(fixed);
+        }
+      }
+      groups.gened[requirement] = temp;
     }
 
-    const remainingCores = remainingCourses["cores"];
+    const remainingCores = remainingCourses[1];
     for (let element of remainingCores) {
-      if (typeof element === "string") {
-        groups.core.push = [element];
-      }
-      else {
+      if (element.length === 1) {
+        const fixed = await this.getCourseInfo(element[0])
+        groups.core.push([fixed]);
+
+      } else {
         if (element[element.length - 1] === "RANGE") {
           const subject = element[0].slice(0, element.indexOf(":"));
           const group = await this.coursesWithinRange(element[0], element[1], subject); // mongo
           groups.core.push(group);
         }
         else {
-          groups.core.push(element);
+          const nxt = [];
+          for (let a of element) {
+            const fixed = await this.getCourseInfo(a)
+            nxt.push(fixed);
+          }
+          groups.core.push(nxt);
         }
       }
       console.log("G: ", groups)
     }
-    const recs = []
-    let i = 0;
-    for (let group in groups["geneds"]) {
-      if (i >= 2) {
-        break;
-      }
-      recs.push(group[0]);
-      i++;
-    }
-    let j = 0;
-    for (let group in groups["cores"]) {
-      if (i >= 3) {
-        break;
-      }
-      recs.push(group[0]);
-      i++;
-    }
-    let finalrecs = []
-    for (let i = 0; i < recs.length; i++) {
-      const thingtopush = await this.getCourseInfo(recs[i])
-      finalrecs.push(thingtopush);
-    }
-    return finalrecs;
+  
+    return groups;
+    // const recs = []
+    // let i = 0;
+    // for (let group in groups.gened) {
+    //   if (i >= 2) {
+    //     break;
+    //   }
+    //   recs.push(group[0]);
+    //   i++;
+    // }
+    // let j = 0;
+    // for (let group in groups["cores"]) {
+    //   if (i >= 3) {
+    //     break;
+    //   }
+    //   recs.push(group[0]);
+    //   i++;
+    // }
+    // let finalrecs = []
+    // for (let i = 0; i < recs.length; i++) {
+    //   const thingtopush = await this.getCourseInfo(recs[i])
+    //   finalrecs.push(thingtopush);
+    // }
   }
+
+
+  reducer = (object) => {
+    var time = object.timeAndLocations.length > 0 ? (object.timeAndLocations[0].startTime + ' ' + object.timeAndLocations[0].days) : "tbd";
+    const subject = object.subject + ":" + String(object.course);
+    return {instructor: "tbd", title: object.title, time:time, ID:subject}
+  }
+
+
   getGenEdCoursesByRequirement = async (requirement, session = "Spring 2023") => {
     try {
       await client.connect();
@@ -78,9 +100,6 @@ class scheduleBuilder {
 
       const db = await client.db('data');
       const collection = await db.collection('GenEdClasses');
-
-      const document = await collection.findOne();
-
       // // If a document is found, print its field names
       // const doc = await collection.find().toArray();
 
@@ -113,7 +132,7 @@ class scheduleBuilder {
   getCourseInfo = async (rec) => {
     const subject = rec.slice(0, rec.indexOf(":"));
     const courseNumber = rec.slice(rec.indexOf(":") + 1, rec.length);
-    const session = "Spring 2023";
+    const session = "Spring 2024";
     try {
       await client.connect();
       console.log("Connected to MongoDB!");
@@ -129,7 +148,7 @@ class scheduleBuilder {
       }).toArray();
 
       console.log("Core: ", courses);
-      return courses;
+      return this.reducer(courses[0]);
 
     } catch (error) {
       console.error('Error:', error);
