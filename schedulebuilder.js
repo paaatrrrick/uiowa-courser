@@ -27,29 +27,29 @@ class scheduleBuilder {
     const remainingGeneds = remainingCourses["geneds"];
     for (let requirement of remainingGeneds) {
       const group = await this.getGenEdCoursesByRequirement(requirement); // mongo
-      groups.gened[requirement] = group[0];
+      groups.gened[requirement] = group;
     }
-    console.log(groups);
-    return;
+
     const remainingCores = remainingCourses["cores"];
-    for (let element in remainingCores) {
+    for (let element of remainingCores) {
       if (typeof element === "string") {
         groups.core.push = [element];
       }
       else {
         if (element[element.length - 1] === "RANGE") {
           const subject = element[0].slice(0, element.indexOf(":"));
-          const group = await this.courseswithinrange(element[0], element[1], subject); // mongo
+          const group = await this.coursesWithinRange(element[0], element[1], subject); // mongo
           groups.core.push(group);
         }
         else {
           groups.core.push(element);
         }
       }
+      console.log("G: ", groups)
     }
     const recs = []
     let i = 0;
-    for (let group in groups.gened) {
+    for (let group in groups["geneds"]) {
       if (i >= 2) {
         break;
       }
@@ -57,7 +57,7 @@ class scheduleBuilder {
       i++;
     }
     let j = 0;
-    for (let group in groups.core) {
+    for (let group in groups["cores"]) {
       if (i >= 3) {
         break;
       }
@@ -113,7 +113,7 @@ class scheduleBuilder {
   getCourseInfo = async (rec) => {
     const subject = rec.slice(0, rec.indexOf(":"));
     const courseNumber = rec.slice(rec.indexOf(":") + 1, rec.length);
-    const session = 20235;
+    const session = "Spring 2023";
     try {
       await client.connect();
       console.log("Connected to MongoDB!");
@@ -128,7 +128,7 @@ class scheduleBuilder {
         subject: subject
       }).toArray();
 
-      console.log(courses);
+      console.log("Core: ", courses);
       return courses;
 
     } catch (error) {
@@ -139,7 +139,7 @@ class scheduleBuilder {
   }
 
   // Retrieves a list of courses within a specified range from the database.
-  coursesWithinRange = async (min, max, session = 20235, subject) => {
+  coursesWithinRange = async (min, max, session = "Spring 2023", subject) => {
     try {
       await client.connect();
       console.log("Connected to MongoDB!");
