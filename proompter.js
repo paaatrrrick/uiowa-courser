@@ -21,7 +21,6 @@ class Proompter{
         // {"role": "user", "content": `${sampleDegreeAudit3}`}]
         // });
         // console.log(completion.data.choices); 
-        
         //const remaining = completion.data.choices[0].content;
         const remaining = '{"geneds": ["INTERNATIONAL AND GLOBAL ISSUES"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }' 
         return JSON.parse(remaining);

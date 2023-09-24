@@ -1,4 +1,3 @@
-// const OCR = require("./ocr");
 const Proompter = require("./proompter")
 const scheduleBuilder = require("./scheduleBuilder")
 const path = require('path')
@@ -33,9 +32,8 @@ class Agent {
 
     // basic template for agent
     ready = async () => {
-        // this.degreeAuditText = OCR.getDegreeAuditText(this.degreeAuditPDF);
-        const degreeAuditText = pdftotext;
-        const remaining = this.proompter.getMissing();
+        this.degreeAuditText = this.getText(this.degreeAuditPDFPath);
+        const remaining = this.proompter.getMissing(this.degreeAuditText);
         const recommendedSchedules = this.scheduleBuilder.getRecommendations(remaining);
         return recommendedSchedules;
     }
