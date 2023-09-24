@@ -24,53 +24,65 @@ class scheduleBuilder {
     // resolve with grouping
     // pick 5, 2 gen ed, 3 cores
     const groups = { gened: {}, core: [] };
-    const remainingGeneds = remainingCourses["geneds"];
+    const remainingGeneds = remainingCourses[0];
     for (let requirement of remainingGeneds) {
       const group = await this.getGenEdCoursesByRequirement(requirement); // mongo
       groups.gened[requirement] = group;
     }
 
-    const remainingCores = remainingCourses["cores"];
+    const remainingCores = remainingCourses[1];
     for (let element of remainingCores) {
-      if (typeof element === "string") {
-        groups.core.push = [element];
-      }
-      else {
+      if (element.length === 1) {
+        const fixed = await this.getCourseInfo(element[0])
+        //core: 2d array
+        //gened: 2d array
+        //course objectID
+        groups.core.push(fixed);
+
+      } else {
         if (element[element.length - 1] === "RANGE") {
           const subject = element[0].slice(0, element.indexOf(":"));
           const group = await this.coursesWithinRange(element[0], element[1], subject); // mongo
           groups.core.push(group);
         }
         else {
-          groups.core.push(element);
+          const nxt = [];
+          for (let a of element) {
+            const fixed = await this.getCourseInfo(a)
+            nxt.push(fixed);
+          }
+          groups.core.push(nxt);
         }
       }
       console.log("G: ", groups)
     }
-    const recs = []
-    let i = 0;
-    for (let group in groups["geneds"]) {
-      if (i >= 2) {
-        break;
-      }
-      recs.push(group[0]);
-      i++;
-    }
-    let j = 0;
-    for (let group in groups["cores"]) {
-      if (i >= 3) {
-        break;
-      }
-      recs.push(group[0]);
-      i++;
-    }
-    let finalrecs = []
-    for (let i = 0; i < recs.length; i++) {
-      const thingtopush = await this.getCourseInfo(recs[i])
-      finalrecs.push(thingtopush);
-    }
-    return finalrecs;
+  
+    return groups;
+    // const recs = []
+    // let i = 0;
+    // for (let group in groups.gened) {
+    //   if (i >= 2) {
+    //     break;
+    //   }
+    //   recs.push(group[0]);
+    //   i++;
+    // }
+    // let j = 0;
+    // for (let group in groups["cores"]) {
+    //   if (i >= 3) {
+    //     break;
+    //   }
+    //   recs.push(group[0]);
+    //   i++;
+    // }
+    // let finalrecs = []
+    // for (let i = 0; i < recs.length; i++) {
+    //   const thingtopush = await this.getCourseInfo(recs[i])
+    //   finalrecs.push(thingtopush);
+    // }
   }
+  
+
   getGenEdCoursesByRequirement = async (requirement, session = "Spring 2023") => {
     try {
       await client.connect();
@@ -78,9 +90,6 @@ class scheduleBuilder {
 
       const db = await client.db('data');
       const collection = await db.collection('GenEdClasses');
-
-      const document = await collection.findOne();
-
       // // If a document is found, print its field names
       // const doc = await collection.find().toArray();
 
@@ -113,7 +122,7 @@ class scheduleBuilder {
   getCourseInfo = async (rec) => {
     const subject = rec.slice(0, rec.indexOf(":"));
     const courseNumber = rec.slice(rec.indexOf(":") + 1, rec.length);
-    const session = "Spring 2023";
+    const session = "Spring 2024";
     try {
       await client.connect();
       console.log("Connected to MongoDB!");
