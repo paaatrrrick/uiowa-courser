@@ -1,5 +1,5 @@
 const Proompter = require("./proompter")
-const scheduleBuilder = require("./scheduleBuilder")
+const scheduleBuilder = require("./schedulebuilder")
 const path = require('path')
 const fs = require('fs')
 const extract = require('pdf-text-extract')
@@ -25,7 +25,6 @@ class Agent {
                 console.dir(err)
                 return
             }
-            console.log(pages.join(''));
             fs.writeFileSync('./dump.txt', pages.join(''), 'utf-8');
             myValue = pages.join('');
         })

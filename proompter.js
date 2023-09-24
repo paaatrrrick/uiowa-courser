@@ -4,14 +4,15 @@
 // const { z } = require("zod");
 // const { StructuredOutputParser, CustomListOutputParser } = require("langchain/output_parsers");
 const { Configuration, OpenAIApi } = require("openai");
-class Proompter{
-    constructor() {
-        const configuration = new Configuration({
-            apiKey: process.env.OPEN_AI
-        });        
-        this.openai = new OpenAIApi(configuration);
-    }
+class Proompter {
+      constructor() {
+            const configuration = new Configuration({
+                  apiKey: process.env.OPEN_AI
+            });
+            this.openai = new OpenAIApi(configuration);
+      }
 
+<<<<<<< HEAD
     getMissing = async (degreeAuditText) => {
       const completion = await this.openai.createChatCompletion({
             model: 'gpt-3.5-turbo-16k',
@@ -43,6 +44,22 @@ class Proompter{
       return json;
         //return completion.data.choices[0].content;     
     }
+=======
+      getMissing = async (degreeAuditText) => {
+            // const completion = await this.openai.createChatCompletion({
+            //     model: 'gpt-4',
+            //     messages: [{"role": "system", "content": `${systemProompt0}`},
+            // {"role": "user", "content": `${sampleDegreeAudit0}`},
+            // {"role": "assistant", "content": `${sampleResponse}`},
+            // {"role": "user", "content": `${sampleDegreeAudit3}`}]
+            // });
+            // console.log(completion.data.choices); 
+            //const remaining = completion.data.choices[0].content;
+            const remaining = '{"geneds": ["International and Global Issues"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }'
+            return JSON.parse(remaining);
+            //return completion.data.choices[0].content;     
+      }
+>>>>>>> eb9c02fe2d9e110e34bfef292d134f30eb7d8bda
 }
 
 
