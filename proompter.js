@@ -5,16 +5,14 @@
 // const { StructuredOutputParser, CustomListOutputParser } = require("langchain/output_parsers");
 const { Configuration, OpenAIApi } = require("openai");
 class Proompter{
-    constructor(degreeAuditText) {
-        this.degreeAuditText = degreeAuditText;
+    constructor() {
         const configuration = new Configuration({
             apiKey: process.env.OPEN_AI
         });        
         this.openai = new OpenAIApi(configuration);
-        this.scheduleBuilder = null;
     }
 
-    getMissing = async () => {
+    getMissing = async (degreeAuditText) => {
         // const completion = await this.openai.createChatCompletion({
         //     model: 'gpt-4',
         //     messages: [{"role": "system", "content": `${systemProompt0}`},

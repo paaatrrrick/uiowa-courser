@@ -1,9 +1,9 @@
 class scheduleBuilder {
     constructor(){
-        this.remainingCourses = null;
+        this.dbStuff = null;
     }
 
-    buildSchedule = (remainingCourses) => {
+    getRecommendations = (remainingCourses) => {
         console.log('schedule');
         // call DB for geneds
         // call DB for cores
