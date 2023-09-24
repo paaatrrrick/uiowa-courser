@@ -200,6 +200,124 @@ const sampleCourseResponse1 = `
 
       `
 
+const sampleRequirements2 = `[For geneds I only want to do Art, I don't want to take any class with Professor Denise]`
+const sampleCourses2 =
+      `{
+    "geneds": [
+        {
+            "Art": [
+                {
+                    "Instructor": "Missy",
+                    "Title": "Art Class",
+                    "Time": "9:00am - 3:00pm",
+                    "ID": "ART:1111"
+                },
+                {
+                    "Instructor": "Missy 2",
+                    "Title": "Advanced Art Class",
+                    "Time": "10:45am - 12:15pm",
+                    "ID": "ART:1231"
+                }
+            ]
+        },
+        {
+            "History": [
+                {
+                    "Instructor": "Billy Bob",
+                    "Title": "Anthropology and Contemporary World Problems",
+                    "Time": "9:00am - 10:30am",
+                    "ID": "ANTH:2100"
+                },
+                {
+                    "Instructor": "Billy Doe",
+                    "Title": "World Problems",
+                    "Time": "10:00am - 11:30am",
+                    "ID": "ABCD:2150"
+                },
+                {
+                    "Instructor": "John Bob",
+                    "Title": "Ant History",
+                    "Time": "9:00pm - 10:30pm",
+                    "ID": "DBCD:3000"
+                }
+            ]
+        }
+    ],
+    "core": [
+        {
+            "Instructor": "Pee",
+            "Title": "Networks",
+            "Time": "6:00pm - 12:00pm",
+            "ID": "CS:2300"
+        },
+        {
+            "Instructor": "Denise",
+            "Title": "Advanced Algorithms",
+            "Time": "1:00pm - 2:45pm",
+            "ID": "CS:4330"
+        },
+        {
+            "Instructor": "Denise",
+            "Title": "Algorithms",
+            "Time": "11:30am - 12:45pm",
+            "ID": "CS:3330"
+        },
+        {
+            "Instructor": "Pee",
+            "Title": "Algorithms",
+            "Time": "11:30am - 12:45pm",
+            "ID": "CS:3330"
+        },
+        {
+            "Instructor": "HEHEHEHA.",
+            "Title": "Fundamentals",
+            "Time": "2:00pm - 2:30pm",
+            "ID": "CS:1210"
+        },
+        {
+            "Instructor": "John Doe",
+            "Title": "Computer Architecture",
+            "Time": "4:00pm - 5:00pm",
+            "ID": "CS:3620"
+        },
+        {
+            "Instructor": "Mayer",
+            "Title": "CS Fundamentals",
+            "Time": "3:00pm - 3:45pm",
+            "ID": "CS:1100"
+        }
+    ]
+}
+`
+
+const sampleCourseResponse2 =
+      `[
+            {
+                  Instructor: Missy, 
+                  Title: Art Class, 
+                  Time: 9:00am - 3:00pm, 
+                  ID: ART:1111
+            },
+      {
+            "Instructor": "Pee",
+            "Title": "Algorithms",
+            "Time": "11:30am - 12:45pm",
+            "ID": "CS:3330"
+        },
+        {
+            "Instructor": "HEHEHEHA.",
+            "Title": "Fundamentals",
+            "Time": "2:00pm - 2:30pm",
+            "ID": "CS:1210"
+        },
+        {
+            "Instructor": "John Doe",
+            "Title": "Computer Architecture",
+            "Time": "4:00pm - 5:00pm",
+            "ID": "CS:3620"
+        },
+      ]`
+
 const sampleDegreeAudit0 =
       ` Sharda, Gautam                                             Program: A22C1BS 
 01421135                                                Catalog Year: FA2021
