@@ -35,15 +35,38 @@ basicRoutes.post('/upload', async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath);
-    agent.ready();
-    res.send('File processed. Recommended schedules generated.');
+    const agent = new Agent(filePath, '');
+    const plans = await agent.ready();
+    res.json(plans);
   } catch (error) {
     console.error('Error processing file:', error);
     res.status(500).send('Server error');
   }
 });
 
+
+basicRoutes.post('/updateAgain', async (req, res) => {
+  try {
+    //   if (!req.files || !req.files.pdf) {
+    //     return res.status(400).send('No files were uploaded.');
+    //   }
+
+    // console.log(req.files.file);
+    const file = req.files.file;
+    const specifications = req.body.specifications;
+    // save file to uploads directory
+    const fileNameNoDot = file.name.split('.')[0];
+    const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
+    await file.mv(filePath);
+
+    const agent = new Agent(filePath, specifications);
+    const plans = await agent.ready();
+    res.json(plans);
+  } catch (error) {
+    console.error('Error processing file:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 basicRoutes.use((err, req, res, next) => {
   console.log(err); // Log the stack trace of the error

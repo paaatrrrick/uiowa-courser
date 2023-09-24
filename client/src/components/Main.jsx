@@ -124,6 +124,7 @@ const messagesHook = () => {
 }
 
 export function Main() {
+  const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, addMessage] = messagesHook();
   const myRef = useRef(null);
@@ -146,23 +147,22 @@ export function Main() {
       scrollToBottom();
     }
     addMessage([{...nxtValue}], scrollToBottomAfterTimeout);
-    // const response = await fetch(`${constants.url}/question`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     question: nextQuestion,
-    //   }),
-    // });
-    // const res = await response.json();
-    //await new Promise(resolve => setTimeout(resolve, 3000));
-    //scrollToBottomAfterTimeout();
-    //addMessage([{...nxtValue}, {"type": "AI", "plans": dummyDataq.plans, "text": "", "startText": "Here is a revised set of courses", "endText": "Does this meet your expectations better?" }], scrollToBottom);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('specifications', nextQuestion)
+    const response = await fetch(`${constants.url}/updateAgain`, {
+        method: 'POST',
+        body: data,
+    }); 
+    const res = await response.json();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    scrollToBottomAfterTimeout();
+    addMessage([{...nxtValue}, {"type": "AI", "plans": res.plans, "text": "", "startText": "Here is a revised set of courses", "endText": "Does this meet your expectations better?" }], scrollToBottom);
   }
 
   async function handleFileUpload(e) {
     const file = e.target.files[0];
+    setFile(file);
     setIsLoading(true);
     const data = new FormData();
     data.append('file', file);
@@ -173,7 +173,6 @@ export function Main() {
     const res = await response.json();
     console.log(res);
     setIsLoading(false);
-    //setPlans([{"type": "AI", "plans": res.courses, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }]);
     addMessage([{"type": "AI", "plans": res.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }], scrollToBottom);
   }
 

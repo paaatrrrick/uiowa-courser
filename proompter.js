@@ -12,6 +12,32 @@ class Proompter {
             this.openai = new OpenAIApi(configuration);
       }
 
+      buildSchedules = async (recommendedSchedules, specifications) => {
+            return {
+                plans: [
+                  {courses: [ 
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                  ]},
+                  {courses: [ 
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                  ]},
+                  {courses: [ 
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                    {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
+                  ]},
+                ],
+              }
+        } 
+
     getMissing = async (degreeAuditText) => {
       const completion = await this.openai.createChatCompletion({
             model: 'gpt-3.5-turbo-16k',
