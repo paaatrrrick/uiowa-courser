@@ -17,4 +17,4 @@ extract = (filePath, function (err, pages) {
 })
 
 }
-module.exports = extract;
+module.exports = pdftotext;

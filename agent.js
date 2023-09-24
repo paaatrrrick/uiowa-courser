@@ -1,13 +1,34 @@
 // const OCR = require("./ocr");
 const Proompter = require("./proompter")
 const scheduleBuilder = require("./scheduleBuilder")
+const path = require('path')
+const fs = require('fs')
+const extract = require('pdf-text-extract')
 
 class Agent {
-    constructor(degreeAuditPDF) {
-        this.degreeAuditPDF = degreeAuditPDF;
+    constructor(degreeAuditPDFPath) {
+        this.degreeAuditPDFPath = degreeAuditPDFPath;
         this.degreeAuditText = null;
         this.proompter = new Proompter();
         this.scheduleBuilder = new scheduleBuilder();
+    }
+
+    /* 
+    *
+    *   @param {string} pathToPdf - path to pdf file
+    *  @returns {string} - text from pdf
+    *   
+    */
+    getText = (pathToPdf) => {
+        extract(pathToPdf, function (err, pages) {
+            if (err) {
+                console.dir(err)
+                return
+            }
+            console.log(pages.join(''));
+            fs.writeFileSync('./dump.txt', pages.join(''), 'utf-8');
+            return pages.join('');
+        })
     }
 
     // basic template for agent
