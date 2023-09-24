@@ -77,3 +77,33 @@
     padding: 20px;
     border-radius: 5px;
   }
+
+
+  .planContainer {
+    width: 600px;
+    max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0px !important;
+    padding: 0px !important;
+    padding: 10px;
+  }
+
+
+  .PeopleListParent{
+    width: 100%;
+  }
+
+  .humanAnswer{
+    width: 600px;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 25px 2px 2px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 40px 0px;
+    background-color: #FFF7C3;
+  }

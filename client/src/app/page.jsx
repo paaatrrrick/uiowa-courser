@@ -7,6 +7,8 @@ import { Pricing } from '@/components/Pricing'
 import { PrimaryFeatures } from '@/components/PrimaryFeatures'
 import { SecondaryFeatures } from '@/components/SecondaryFeatures'
 import { Testimonials } from '@/components/Testimonials'
+import Head from 'next/head'
+
 
 export default function Home() {
   return (
@@ -15,7 +17,6 @@ export default function Home() {
       <main>
         <Hero />
       </main>
-      <Footer />
     </>
   )
   
