@@ -23,7 +23,7 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
 }));
 
 basicRoutes.post('/upload', async (req, res) => {
-    try {
+  try {
     //   if (!req.files || !req.files.pdf) {
     //     return res.status(400).send('No files were uploaded.');
     //   }
@@ -31,14 +31,14 @@ basicRoutes.post('/upload', async (req, res) => {
     //   const degreeAuditPDF = req.files.pdf;
     //   console.log(degreeAuditPDF);
 
-      agent = new Agent('');
-      agent.ready();
-      res.send('File processed. Recommended schedules generated.');
-    } catch (error) {
-      console.error('Error processing file:', error);
-      res.status(500).send('Server error');
-    }
-  });
+    agent = new Agent('');
+    agent.ready();
+    res.send('File processed. Recommended schedules generated.');
+  } catch (error) {
+    console.error('Error processing file:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 
 basicRoutes.use((err, req, res, next) => {
