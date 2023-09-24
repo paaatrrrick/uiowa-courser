@@ -12,62 +12,193 @@ class Proompter {
             this.openai = new OpenAIApi(configuration);
       }
 
-    getMissing = async (degreeAuditText) => {
-      const completion = await this.openai.createChatCompletion({
-            model: 'gpt-3.5-turbo-16k',
-            temperature: 0,
-            messages: [
-                  {"role": "system", "content": `${systemProompt0}`},
-                  {"role": "user", "content": `${sampleDegreeAudit0}`},
-                  {"role": "assistant", "content": `${sampleResponse}`},
-                  {"role": "user", "content": `${degreeAuditText}`}
-            ]
-      });
-      console.log(completion.data.choices); 
-      const remaining = completion.data.choices[0].message.content;
-      console.log(remaining);
-      //   const remaining = '{"geneds": ["INTERNATIONAL AND GLOBAL ISSUES"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }' 
-      const json = JSON.parse(remaining);
-      const newJSON0 = []
-      for (let row of json[1]){
-            const newRow = []
-            for (let element of row){
-                  const splitElement = element.split(", ");
-                  for (let newElement of splitElement){
-                        newRow.push(newElement);
+      getMissing = async (degreeAuditText) => {
+            const completion = await this.openai.createChatCompletion({
+                  model: 'gpt-3.5-turbo-16k',
+                  temperature: 0,
+                  messages: [
+                        { "role": "system", "content": `${systemProompt0}` },
+                        { "role": "user", "content": `${sampleDegreeAudit0}` },
+                        { "role": "assistant", "content": `${sampleResponse}` },
+                        { "role": "user", "content": `${degreeAuditText}` }
+                  ]
+            });
+            console.log(completion.data.choices);
+            const remaining = completion.data.choices[0].message.content;
+            console.log(remaining);
+            //   const remaining = '{"geneds": ["INTERNATIONAL AND GLOBAL ISSUES"], "cores": [["CS:3820"], ["CS:3990"], ["CS:3620","CS:5899","RANGE"], ["NATURAL SCIENCE"], ["CS:3620", "CS:5899","RANGE"]] }' 
+            const json = JSON.parse(remaining);
+            const newJSON0 = []
+            for (let row of json[1]) {
+                  const newRow = []
+                  for (let element of row) {
+                        const splitElement = element.split(", ");
+                        for (let newElement of splitElement) {
+                              newRow.push(newElement);
+                        }
                   }
+                  newJSON0.push(newRow);
             }
-            newJSON0.push(newRow);
+            json[1] = newJSON0;
+            return json;
+            //return completion.data.choices[0].content;     
       }
-      json[1] = newJSON0;
-      return json;
-        //return completion.data.choices[0].content;     
-    }
 }
 
 const sampleRequirements0 = `[Don't return any classes that start at or before 9am, I only want history geneds, I want to take Networks]`
 const sampleCourses0 =
       `{
-      geneds: [{Art: [{ID: ART:1111, Title: Art Class, Instructor: Missy, Time: 9:00am - 3:00pm}, {ID: ART:1231, Title: Advanced Art Class, Instructor: Missy 2, Time: 9:30pm - 10:30pm}]}, {History: [{ID: ANTH:2100, Title: Anthropology and Contemporary World Problems, Instructor: billy bob, Time: 9:00am - 10:30am}, {ID: ABCD:2150, Title: World Problems, Instructor: billy doe, Time: 10:00am - 11:30am}, {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}]}],
-      core: [{ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3330, Title: Algorithms, Instructor: Denise, Time: 11:30am - 12:45pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}]
+      geneds: [{Art: [{Instructor: Missy, Title: Art Class, Time: 9:00am - 3:00pm, ID: ART:1111}, {Instructor: Missy 2, Title: Advanced Art Class, Time: 9:30pm - 10:30pm, ID: ART:1231}]}, {History: [{Instructor: Billy Bob, Title: Anthropology and Contemporary World Problems, Time: 9:00am - 10:30am, ID: ANTH:2100}, {Instructor: Billy Doe, Title: World Problems, Time: 10:00am - 11:30am, ID: ABCD:2150}, {Instructor: John Bob, Title: Ant History, Time: 9:00pm - 10:30pm, ID: DBCD:3000}]}],
+      core: [{Instructor: Rishab, Title: Networks, Time: 10:30am - 12:00pm, ID: CS:2300}, {Instructor: Denise, Title: Algorithms, Time: 11:30am - 12:45pm, ID: CS:3330}, {Instructor: Goddard, Title: Computer Architecture, Time: 4:30pm - 5:20pm, ID: CS:3620}, {Instructor: HEHEHEHA, Title: Fundamentals, Time: 2:00pm - 2:30pm, ID: CS:1210}]
 }`
 const sampleCourseResponse0 = `
-      [
-            {ID: DBCD:3000, Title: Ant History, Instructor: john bob, Time: 9:00pm - 10:30pm}, {ID: CS:2300, Title: Networks, Instructor: Rishab, Time: 10:30am - 12:00pm}, {ID: CS:3620, Title: Computer Architecture, Instructor: Goddard, Time: 4:30pm - 5:20pm}, {ID: CS:1210, Title: Fundamentals, Instructor: HEHEHEHA. Time: 2:00pm - 2:30pm}
-      ],
+[
+    {
+        "Instructor": "John Bob",
+        "Title": "Ant History",
+        "Time": "9:00pm - 10:30pm",
+        "ID": "DBCD:3000"
+    },
+    {
+        "Instructor": "Rishab",
+        "Title": "Networks",
+        "Time": "10:30am - 12:00pm",
+        "ID": "CS:2300"
+    },
+    {
+        "Instructor": "Goddard",
+        "Title": "Computer Architecture",
+        "Time": "4:30pm - 5:20pm",
+        "ID": "CS:3620"
+    },
+    {
+        "Instructor": "HEHEHEHA",
+        "Title": "Fundamentals",
+        "Time": "2:00pm - 2:30pm",
+        "ID": "CS:1210"
+    }
+]
+
+
       `
-const systemCoursePrompt0 = `You are a course advisor named Courser.You will be given a student's available courses and the student's personal requirements. 
-Your job is to select courses from the list of given courses that meet the student's requirements and return it as a
-single array of objects, where each object is a course. This array represents a schedule for the student.
-You must select from the given courses object which contains two arrays, one for general education called GENEDS and one for major core classes called CORE.
-The GENEDS array contains objects, where each object is a general education requirement object that contains a key for the requirement name and a value for the requirement's courses.
-The CORE array contains objects, where each object is a core course.
-Each course is an object that contains a key for the course ID, course title, instructor, and time.
-The student's requirements will be given as an array of strings, where each string is a requirement.
-You must select courses that meet the student's requirements and whose times do not conflict with each other. 
-Never pick more than one course from the same array of courses for a single requirement.
-If there are no courses that meet the student's requirements, return an empty array.
+const sampleRequirements1 = `[I don't want any classes past 5pm, I want to take any class with Professor Goddard]`
+const sampleCourses1 =
+      `{
+    "geneds": [
+        {
+            "Art": [
+                {
+                    "Instructor": "Missy",
+                    "Title": "Art Class",
+                    "Time": "9:00am - 3:00pm",
+                    "ID": "ART:1111"
+                },
+                {
+                    "Instructor": "Missy 2",
+                    "Title": "Advanced Art Class",
+                    "Time": "10:45am - 12:15pm",
+                    "ID": "ART:1231"
+                }
+            ]
+        },
+        {
+            "History": [
+                {
+                    "Instructor": "Billy Bob",
+                    "Title": "Anthropology and Contemporary World Problems",
+                    "Time": "9:00am - 10:30am",
+                    "ID": "ANTH:2100"
+                },
+                {
+                    "Instructor": "Billy Doe",
+                    "Title": "World Problems",
+                    "Time": "10:00am - 11:30am",
+                    "ID": "ABCD:2150"
+                },
+                {
+                    "Instructor": "John Bob",
+                    "Title": "Ant History",
+                    "Time": "9:00pm - 10:30pm",
+                    "ID": "DBCD:3000"
+                }
+            ]
+        }
+    ],
+    "core": [
+        {
+            "Instructor": "Goddard",
+            "Title": "Networks",
+            "Time": "6:00pm - 12:00pm",
+            "ID": "CS:2300"
+        },
+        {
+            "Instructor": "Denise",
+            "Title": "Algorithms",
+            "Time": "11:30am - 12:45pm",
+            "ID": "CS:3330"
+        },
+        {
+            "Instructor": "Goddard",
+            "Title": "Computer Architecture",
+            "Time": "4:00pm - 5:00pm",
+            "ID": "CS:3620"
+        },
+        {
+            "Instructor": "HEHEHEHA.",
+            "Title": "Fundamentals",
+            "Time": "2:00pm - 2:30pm",
+            "ID": "CS:1210"
+        },
+        {
+            "Instructor": "John Doe",
+            "Title": "Computer Architecture",
+            "Time": "4:00pm - 5:00pm",
+            "ID": "CS:3620"
+        },
+        {
+            "Instructor": "Mayer",
+            "Title": "CS Fundamentals",
+            "Time": "3:00pm - 3:45pm",
+            "ID": "CS:1100"
+        }
+    ]
+}
 `
+const sampleCourseResponse1 = `
+[
+    {
+        "Instructor": "Billy Bob",
+        "Title": "Anthropology and Contemporary World Problems",
+        "Time": "9:00am - 10:30am",
+        "ID": "ANTH:2100"
+    },
+    {
+        "Instructor": "Missy 2",
+        "Title": "Advanced Art Class",
+        "Time": "10:45am - 12:15pm",
+        "ID": "ART:1231"
+    },
+    {
+        "Instructor": "Goddard",
+        "Title": "Computer Architecture",
+        "Time": "4:00pm - 5:00pm",
+        "ID": "CS:3620"
+    },
+    {
+        "Instructor": "HEHEHEHA.",
+        "Title": "Fundamentals",
+        "Time": "2:00pm - 2:30pm",
+        "ID": "CS:1210"
+    },
+    {
+        "Instructor": "Mayer",
+        "Title": "CS Fundamentals",
+        "Time": "3:00pm - 3:45pm",
+        "ID": "CS:1100"
+    }
+]
+
+      `
 
 const sampleDegreeAudit0 =
       ` Sharda, Gautam                                             Program: A22C1BS 
