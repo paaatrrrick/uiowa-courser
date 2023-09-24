@@ -39,8 +39,8 @@ class Agent {
         this.degreeAuditText = await this.getText(this.degreeAuditPDFPath);
         const remaining = await this.proompter.getMissing(this.degreeAuditText);
         const recommendedSchedules = await this.scheduleBuilder.getRecommendations(remaining);
-        console.log(recommendedSchedules);
-        return recommendedSchedules;
+        const getSchedules = await this.proompter.buildSchedules(recommendedSchedules);
+        return getSchedules;
     }
 
     // todo
