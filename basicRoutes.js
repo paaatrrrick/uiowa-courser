@@ -23,22 +23,26 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
 }));
 
 basicRoutes.post('/upload', async (req, res) => {
-    try {
+  try {
     //   if (!req.files || !req.files.pdf) {
     //     return res.status(400).send('No files were uploaded.');
     //   }
 
-    //   const degreeAuditPDF = req.files.pdf;
-    //   console.log(degreeAuditPDF);
+    // console.log(req.files.file);
+    const file = req.files.file;
+    // save file to uploads directory
+    const fileNameNoDot = file.name.split('.')[0];
+    const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
+    await file.mv(filePath);
 
-      agent = new Agent('');
-      agent.ready();
-      res.send('File processed. Recommended schedules generated.');
-    } catch (error) {
-      console.error('Error processing file:', error);
-      res.status(500).send('Server error');
-    }
-  });
+    agent = new Agent(filePath);
+    agent.ready();
+    res.send('File processed. Recommended schedules generated.');
+  } catch (error) {
+    console.error('Error processing file:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 
 basicRoutes.use((err, req, res, next) => {
