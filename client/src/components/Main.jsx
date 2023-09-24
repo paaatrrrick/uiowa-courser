@@ -166,15 +166,15 @@ export function Main() {
     setIsLoading(true);
     const data = new FormData();
     data.append('file', file);
-    // const response = await fetch(`${constants.url}/upload`, {
-    //     method: 'POST',
-    //     body: data,
-    // }); 
-    // const res = await response.json();
-    // console.log(res);
+    const response = await fetch(`${constants.url}/upload`, {
+        method: 'POST',
+        body: data,
+    }); 
+    const res = await response.json();
+    console.log(res);
     setIsLoading(false);
     //setPlans([{"type": "AI", "plans": res.courses, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }]);
-    addMessage([{"type": "AI", "plans": dummyData.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }], scrollToBottom);
+    addMessage([{"type": "AI", "plans": res.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }], scrollToBottom);
   }
 
   if (isLoading) return <Loader />;
