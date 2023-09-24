@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Loader } from './Loader';
 import { Plan } from './Plan';
 
-const TESTING = false;
+const TESTING = true;
 
 function deleteAuthToken() {
     window.localStorage.removeItem("courser-auth");
