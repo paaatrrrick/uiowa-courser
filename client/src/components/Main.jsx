@@ -203,6 +203,12 @@ export function Main() {
       // clear the input field value
       setApiKey(key);
       document.getElementById("apiKey").value = "";
+      document.getElementById("apiKeyField").classList.add("outline-green-500");
+      document.getElementById("apiKeyField").classList.add("outline");
+      setTimeout(() => {
+        document.getElementById("apiKeyField").classList.remove("outline-green-500");
+        document.getElementById("apiKeyField").classList.remove("outline");
+      }, 1000);
     } else {
       // theres gotta be a better way to display a server error message in nextjs
       document.getElementById("apiKeyField").classList.add("outline-red-500");
@@ -288,11 +294,17 @@ export function Main() {
             <input
               type="text"
               id="apiKey"
-              className="p-2 border border-gray-300 rounded-md"
+              className="p-2 border border-gray-300 rounded-md outline-none focus:border-yellow-400 focus:ring-0"
               placeholder="Your API key"
+              onChange={(e) => setApiKey(e.target.value)}
             />
-            <button className="inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
+
+            <button
+              className={`inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm ${apiKey === '' ? 'cursor-not-allowed' : 'hover:bg-yellow-400 cursor-pointer'
+                }`}
               onClick={() => useApiKey(document.getElementById("apiKey").value)}
+              id="updateApiKeyButton"
+              disabled={apiKey === ''}
             >
               Enter
             </button>
