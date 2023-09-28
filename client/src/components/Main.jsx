@@ -8,11 +8,11 @@ import { Plan } from './Plan';
 const TESTING = true;
 
 function deleteAuthToken() {
-    window.localStorage.removeItem("courser-auth");
-  }
-  
+  window.localStorage.removeItem("courser-auth");
+}
+
 const getUserAuthToken = () => {
-    return window.localStorage.getItem('courser-auth') || '';
+  return window.localStorage.getItem('courser-auth') || '';
 }
 
 const constants = {
@@ -24,52 +24,64 @@ const constants = {
 
 const dummyData = {
   plans: [
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
   ],
 }
 const dummyDataq = {
   plans: [
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
-    {courses: [ 
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-      {ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF"},
-    ]},
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
+    {
+      courses: [
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+        { ID: "CS:2450", title: "Discrete Math", instructor: "elizabeth kleiman", time: "9 AM MWF" },
+      ]
+    },
   ],
 }
 
-const dummy = {"type": "AI", "plans": dummyData.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }
+const dummy = { "type": "AI", "plans": dummyData.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }
 
 
 
@@ -78,41 +90,41 @@ const messagesHook = () => {
   const [messages, setMessages] = useState([]);
 
   const addMessage = async (messagesArr, scrollToBottom) => {
-    var state = [ ...messages];
+    var state = [...messages];
     for (let first of messagesArr) {
-        if (first.type !== "AI") {
-          setMessages([...state, first]);
-          state = [...state, first]
-        } else {
-          const order = ["startText", "text", "plans", "endText"];
-          const nxt = {"type": "AI", "plans": [], "text": "", "startText": "", "endText": ""}
-          while (order.length > 0) {
-            const key = order.shift();
-            if (key === "plans") {
-              const plans = first[key];
-              const totalPlans = [];
-              while (plans.length > 0) {
-                const nextPlan = plans.shift();
-                const newPlans = [];
-                while (nextPlan.courses.length > 0) {
-                  const nextCourse = nextPlan.courses.shift();
-                  newPlans.push(nextCourse);
-                  setMessages([...state, {...nxt, "plans": [...totalPlans, {"courses": [...newPlans]}]}]);
-                  await sleep(200);
-                }
-                totalPlans.push({"courses": [...newPlans]});
-                nxt["plans"] = [...totalPlans];
+      if (first.type !== "AI") {
+        setMessages([...state, first]);
+        state = [...state, first]
+      } else {
+        const order = ["startText", "text", "plans", "endText"];
+        const nxt = { "type": "AI", "plans": [], "text": "", "startText": "", "endText": "" }
+        while (order.length > 0) {
+          const key = order.shift();
+          if (key === "plans") {
+            const plans = first[key];
+            const totalPlans = [];
+            while (plans.length > 0) {
+              const nextPlan = plans.shift();
+              const newPlans = [];
+              while (nextPlan.courses.length > 0) {
+                const nextCourse = nextPlan.courses.shift();
+                newPlans.push(nextCourse);
+                setMessages([...state, { ...nxt, "plans": [...totalPlans, { "courses": [...newPlans] }] }]);
+                await sleep(200);
               }
-            } else {
-              while (first[key].length > 0) {
-                const nextCharacter = first[key][0];
-                first[key] = first[key].slice(1);
-                nxt[key] += nextCharacter;
-                setMessages([...state, {...nxt}]);
-                await sleep(20);
-              }
+              totalPlans.push({ "courses": [...newPlans] });
+              nxt["plans"] = [...totalPlans];
+            }
+          } else {
+            while (first[key].length > 0) {
+              const nextCharacter = first[key][0];
+              first[key] = first[key].slice(1);
+              nxt[key] += nextCharacter;
+              setMessages([...state, { ...nxt }]);
+              await sleep(20);
             }
           }
+        }
       }
     }
     scrollToBottom();
@@ -127,6 +139,7 @@ export function Main() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, addMessage] = messagesHook();
+  const [apiKey, setApiKey] = useState('');
   const myRef = useRef(null);
 
 
@@ -148,32 +161,63 @@ export function Main() {
       console.log(e);
     }
     console.log(previous)
-    const nxtValue = {"type": "human", "text": nextQuestion}
+    const nxtValue = { "type": "human", "text": nextQuestion }
     var requirerments = nextQuestion
     for (let message of messages) {
       if (message.type !== "AI") {
         requirerments = requirerments + ', ' + message.text;
       }
-    } 
+    }
     console.log('a');
     console.log(requirerments);
     const scrollToBottomAfterTimeout = async () => {
       await new Promise(resolve => setTimeout(resolve, 100));
       scrollToBottom();
     }
-    addMessage([{...nxtValue}], scrollToBottomAfterTimeout);
+    addMessage([{ ...nxtValue }], scrollToBottomAfterTimeout);
     const data = new FormData();
     data.append('file', file);
     data.append('requirerments', requirerments);
     data.append('previous', previous);
     const response = await fetch(`${constants.url}/updateAgain`, {
-        method: 'POST',
-        body: data,
-    }); 
+      method: 'POST',
+      body: data,
+    });
     const res = await response.json();
     await new Promise(resolve => setTimeout(resolve, 100));
     scrollToBottomAfterTimeout();
-    addMessage([{...nxtValue}, {"type": "AI", "plans": res.plans, "text": "", "startText": "Here is a revised set of courses", "endText": "Does this meet your expectations better?" }], scrollToBottom);
+    addMessage([{ ...nxtValue }, { "type": "AI", "plans": res.plans, "text": "", "startText": "Here is a revised set of courses", "endText": "Does this meet your expectations better?" }], scrollToBottom);
+  }
+
+  async function useApiKey(key) {
+    const response = await fetch(`${constants.url}/updateApiKey`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ apiKey: key }), // stringifyyyyyyyyyyyyyyy
+    });
+
+    // if successful, display a message to the user.
+    if (response.status === 200) {
+      // clear the input field value
+      setApiKey(key);
+      document.getElementById("apiKey").value = "";
+      document.getElementById("apiKeyField").classList.add("outline-green-500");
+      document.getElementById("apiKeyField").classList.add("outline");
+      setTimeout(() => {
+        document.getElementById("apiKeyField").classList.remove("outline-green-500");
+        document.getElementById("apiKeyField").classList.remove("outline");
+      }, 1000);
+    } else {
+      // theres gotta be a better way to display a server error message in nextjs
+      document.getElementById("apiKeyField").classList.add("outline-red-500");
+      document.getElementById("apiKeyField").classList.add("outline");
+      setTimeout(() => {
+        document.getElementById("apiKeyField").classList.remove("outline-red-500");
+        document.getElementById("apiKeyField").classList.remove("outline");
+      }, 1000);
+    }
   }
 
   async function handleFileUpload(e) {
@@ -183,71 +227,97 @@ export function Main() {
     const data = new FormData();
     data.append('file', file);
     const response = await fetch(`${constants.url}/upload`, {
-        method: 'POST',
-        body: data,
-    }); 
+      method: 'POST',
+      body: data,
+    });
     const res = await response.json();
     console.log(res);
     setIsLoading(false);
-    addMessage([{"type": "AI", "plans": res.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }], scrollToBottom);
+    addMessage([{ "type": "AI", "plans": res.plans, "text": "", "startText": "We thought theses courses would fit well for you next semester", "endText": "Do you have any suggestions to this list" }], scrollToBottom);
   }
 
   if (isLoading) return <Loader />;
-  
+
   if (messages.length > 0) {
-   return (
-    <div className="py-8 h-[90%]">
-      <div  className="mx-auto max-w-7xl h-full flex flex-col items-center justify-between">
-        <div style={{
-          alignItems: 'center',
-          flexDirection: 'column',
-          display: 'flex',
-          justifyContent: 'flex-start',
-        }} 
-        ref={myRef}
-        className='w-full flex-col items-center justify-center h-[80%] overflow-auto'>
-        {messages.map((plan, i) => {
-          return (<Plan plan={plan} key={i}/>)
-          })}
+    return (
+      <div className="py-8 h-[90%]">
+        <div className="mx-auto max-w-7xl h-full flex flex-col items-center justify-between">
+          <div style={{
+            alignItems: 'center',
+            flexDirection: 'column',
+            display: 'flex',
+            justifyContent: 'flex-start',
+          }}
+            ref={myRef}
+            className='w-full flex-col items-center justify-center h-[80%] overflow-auto'>
+            {messages.map((plan, i) => {
+              return (<Plan plan={plan} key={i} />)
+            })}
+          </div>
+          <CommentForm sendNextQuestion={sendNextQuestion} />
         </div>
-        <CommentForm sendNextQuestion={sendNextQuestion}/>
       </div>
-    </div>
-   )}
+    )
+  }
   return (
 
     <div className="py-10 h-[90%]">
-    <header>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">Get Started With Courser</h1>  
-      </div>
-    </header>
-    <main className='h-full'>
-      <div className="mx-auto max-w-7xl h-full">
-      <div className="w-full h-[70%] flex flex-col items-center justify-center">
-        <input type="file" id="fileInput" hidden onChange={handleFileUpload}  />
-      <label 
-        type="button" 
-        htmlFor="fileInput"
-        className="relative block w-[600px] rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 hover:cursor-pointer"
-      >
-        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
-        </svg>
-        <span className="mt-2 block text-sm font-semibold text-gray-900">
-          Upload your Degree Audit
-        </span>
-      </label>
+      <header>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">Get Started With Courser</h1>
         </div>
-      </div>
-    </main>
-  </div>
+      </header>
+      <main className='h-full flex justify-center items-center gap-4 flex-col'>
+        <div className="mx-auto max-w-7xl h-full">
+          <div className="w-full h-[70%] flex flex-col items-center justify-center">
+            <input type="file" id="fileInput" hidden onChange={handleFileUpload} />
+            <label
+              type="button"
+              htmlFor="fileInput"
+              className="relative block w-[600px] rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 hover:cursor-pointer"
+            >
+              <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
+              </svg>
+              <span className="mt-2 block text-sm font-semibold text-gray-900">
+                Upload your Degree Audit
+              </span>
+            </label>
+          </div>
+        </div>
+        {/* user text input for openai api key */}
+        <div className="mt-4">
+          <label htmlFor="apiKey" className="block text-sm font-semibold text-gray-900">
+            Use your own OpenAI API key:
+          </label>
+          <div id="apiKeyField" className="rounded-md justify-center items-center flex mb-4">
+            <input
+              type="text"
+              id="apiKey"
+              className="p-2 border border-gray-300 rounded-md outline-none focus:border-yellow-400 focus:ring-0"
+              placeholder="Your API key"
+              onChange={(e) => setApiKey(e.target.value)}
+            />
 
-);
+            <button
+              className={`inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm ${apiKey === '' ? 'cursor-not-allowed' : 'hover:bg-yellow-400 cursor-pointer'
+                }`}
+              onClick={() => useApiKey(document.getElementById("apiKey").value)}
+              id="updateApiKeyButton"
+              disabled={apiKey === ''}
+            >
+              Enter
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  );
 }
 
 
-function CommentForm({sendNextQuestion}) {
+function CommentForm({ sendNextQuestion }) {
   const [nextQuestion, setNextQuestion] = useState('');
   const send = () => {
     sendNextQuestion(nextQuestion);
@@ -258,7 +328,7 @@ function CommentForm({sendNextQuestion}) {
       <div className="min-w-0 flex-1">
         <div>
           <div className="border-b border-gray-200 focus-within:border-iowaYellow-600">
-            <textarea 
+            <textarea
               rows={1}
               value={nextQuestion}
               onChange={(e) => setNextQuestion(e.target.value)}
@@ -266,8 +336,8 @@ function CommentForm({sendNextQuestion}) {
               placeholder="What are your thoughts..."
             ></textarea>
           </div>
-          
-          <div className="flex justify-end pt-2">            
+
+          <div className="flex justify-end pt-2">
             <button
               className="inline-flex items-center rounded-md bg-iowaYellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-iowaYellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-iowaYellow-600"
               onClick={send}

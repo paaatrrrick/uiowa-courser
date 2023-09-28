@@ -6,6 +6,7 @@ const FormData = require("form-data");
 const { isLoggedIn, asyncMiddleware } = require("./middleware");
 const { randomStringToHash24Bits } = require("./utils/helpers");
 const Agent = require("./agent")
+const Proompter = require("./proompter")
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const basicRoutes = express.Router();
@@ -22,6 +23,17 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
   res.json({ blogs: "blogs" });
 }));
 
+let userApiKey = null; // should this be used in middleware idk?
+basicRoutes.post("/updateApiKey", asyncMiddleware(async (req, res) => {
+  try {
+    userApiKey = req.body.apiKey;
+    console.log("Updated API key to: ", userApiKey);
+  } catch (error) {
+    console.error('Error processing api key', error);
+    res.status(500).send('Server error');
+  }
+}));
+
 basicRoutes.post('/upload', async (req, res) => {
   try {
     //   if (!req.files || !req.files.pdf) {
@@ -35,7 +47,7 @@ basicRoutes.post('/upload', async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath, '', []);
+    const agent = new Agent(filePath, '', [], userApiKey);
     const plans = await agent.ready();
     res.json(plans);
   } catch (error) {
@@ -53,15 +65,15 @@ basicRoutes.post('/updateAgain', async (req, res) => {
 
     // console.log(req.files.file);
     const file = req.files.file;
-    var { requirerments, previous } = req.body;
-    requirerments = requirerments.split(', ');
+    var { requirements, previous } = req.body;
+    requirements = requirements.split(', ');
 
     // save file to uploads directory
     const fileNameNoDot = file.name.split('.')[0];
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath, requirerments, previous);
+    const agent = new Agent(filePath, requirements, previous, userApiKey);
     const plans = await agent.ready();
     res.json(plans);
   } catch (error) {

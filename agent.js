@@ -5,14 +5,14 @@ const fs = require('fs')
 const extract = require('pdf-text-extract')
 
 class Agent {
-    constructor(degreeAuditPDFPath, specifications, previous) {
+    constructor(degreeAuditPDFPath, specifications, previous, userApiKey) {
         this.specifications = specifications;
         this.degreeAuditPDFPath = degreeAuditPDFPath;
         this.degreeAuditText = null;
-        this.proompter = new Proompter();
+        this.proompter = new Proompter(userApiKey);
         this.scheduleBuilder = new scheduleBuilder();
         this.previous = previous;
-    }         
+    }
     /* 
     *
     *   @param {string} pathToPdf - path to pdf file
