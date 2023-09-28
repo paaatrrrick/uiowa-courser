@@ -193,9 +193,9 @@ export function Main() {
     const response = await fetch(`${constants.url}/updateApiKey`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // Set the content type to JSON
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ apiKey: key }), // Stringify the object
+      body: JSON.stringify({ apiKey: key }), // stringifyyyyyyyyyyyyyyy
     });
 
     // if successful, display a message to the user.
@@ -203,6 +203,14 @@ export function Main() {
       // clear the input field value
       setApiKey(key);
       document.getElementById("apiKey").value = "";
+    } else {
+      // theres gotta be a better way to display a server error message in nextjs
+      document.getElementById("apiKeyField").classList.add("outline-red-500");
+      document.getElementById("apiKeyField").classList.add("outline");
+      setTimeout(() => {
+        document.getElementById("apiKeyField").classList.remove("outline-red-500");
+        document.getElementById("apiKeyField").classList.remove("outline");
+      }, 1000);
     }
   }
 
@@ -276,17 +284,19 @@ export function Main() {
           <label htmlFor="apiKey" className="block text-sm font-semibold text-gray-900">
             Use your own OpenAI API key:
           </label>
-          <input
-            type="text"
-            id="apiKey"
-            className="mt-1 p-2 border border-gray-300 rounded-md"
-            placeholder="Your API key"
-          />
-          <button className="mt-2 inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
-            onClick={() => useApiKey(document.getElementById("apiKey").value)}
-          >
-            Enter
-          </button>
+          <div id="apiKeyField" className="rounded-md justify-center items-center flex mb-4">
+            <input
+              type="text"
+              id="apiKey"
+              className="p-2 border border-gray-300 rounded-md"
+              placeholder="Your API key"
+            />
+            <button className="inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
+              onClick={() => useApiKey(document.getElementById("apiKey").value)}
+            >
+              Enter
+            </button>
+          </div>
         </div>
       </main>
     </div>

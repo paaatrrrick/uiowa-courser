@@ -23,7 +23,7 @@ basicRoutes.get("/home", asyncMiddleware(async (req, res) => {
   res.json({ blogs: "blogs" });
 }));
 
-let userApiKey = null;
+let userApiKey = null; // should this be used in middleware idk?
 basicRoutes.post("/updateApiKey", asyncMiddleware(async (req, res) => {
   try {
     userApiKey = req.body.apiKey;
@@ -47,7 +47,7 @@ basicRoutes.post('/upload', async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', fileNameNoDot + file.md5 + '.pdf');
     await file.mv(filePath);
 
-    const agent = new Agent(filePath, '', []);
+    const agent = new Agent(filePath, '', [], userApiKey);
     const plans = await agent.ready();
     res.json(plans);
   } catch (error) {
